@@ -31,10 +31,9 @@ clc;
 
 %user defined parameters
 trajname='XDATCAR'; %trajectory name in lammpstrj format
-N_step=2000; %number of simulation steps
+N_step=10; %number of simulation steps
 N=30;                     %define N grid
 Nparticle=1:8;          %define particles to be included in the density calculation
-smoothing_tag=2;          %1-call smoothing, 2-no smoothing
 r=0.8; %radius
 
 
@@ -45,7 +44,7 @@ r=0.8; %radius
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %starting reading data
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-[data,lattice]=read_poscar(trajname,N_step);
+[data,lattice]=read_xdatcar(trajname,N_step);
 fprintf(' done reading data\n start calculating density...\n');
 
 
@@ -91,47 +90,6 @@ density(1,:,:)=temp;
 density(N,:,:)=temp;
 
 
-if smoothing_tag==1
-fprintf(' smoothing called...\n');
-density_new=zeros(N+1,N+1,N+1);
-	for x_i=2:N
-		for y_i=2:N
-			for z_i=2:N
-				density_new(x_i,y_i,z_i)=density(x_i,y_i,z_i)...
-				+density(x_i+1,y_i,z_i)+density(x_i-1,y_i,z_i)...
-				+density(x_i,y_i+1,z_i)+density(x_i,y_i-1,z_i)...
-				+density(x_i,y_i,z_i+1)+density(x_i,y_i,z_i-1);
-			end
-		end
-	end
-	density_new=density_new./7;
-	for x_i=1:N+1
-		for y_i=[1 N+1]
-			for z_i=[1 N+1]
-				density_new(x_i,y_i,z_i)=density(x_i,y_i,z_i);
-			end
-		end
-	end
-	for x_i=[1 N+1]
-		for y_i=1:N+1
-			for z_i=[1 N+1]
-				density_new(x_i,y_i,z_i)=density(x_i,y_i,z_i);
-			end
-		end
-	end
-	for x_i=[1 N+1]
-		for y_i=[1 N+1]
-			for z_i=1:N+1
-				density_new(x_i,y_i,z_i)=density(x_i,y_i,z_i);
-			end
-		end
-    end
-    density=density_new;
-	fprintf(' smoothing finished\n writing data to CHG file...\n');
-	else
-	fprintf(' smoothing not called\n writing data to CHG file...\n');
-end
-	
 
 
 
@@ -139,7 +97,11 @@ end
 % writing to CHG file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %append the POSCAR to CHGCAR first
-system('del CHG');
+if exist('CHG', 'file')
+  % File exists.  Do stuff....
+  system('del CHG');
+end
+
 system('type POSCAR>>CHG');
 
 %open file and write the grid number

@@ -30,7 +30,7 @@ clear;
 clc;
 
 %user defined parameters
-trajname='XDATCAR'; %trajectory name in lammpstrj format
+trajname='XDATCAR'; %trajectory name in XDATCAR format
 N_step=10; %number of simulation steps
 N=30;                     %define N grid
 Nparticle=1:8;          %define particles to be included in the density calculation

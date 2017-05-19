@@ -22,7 +22,7 @@
 % SOFTWARE.
 %
 %
-% To use the code, please copy the POSCAR and trajectory_name.lammpstrj file
+% To use the code, please copy the POSCAR and XDATCAR file
 % to matlab working directory. Set the user defined parameters and run the code.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

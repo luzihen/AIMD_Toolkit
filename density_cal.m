@@ -36,18 +36,11 @@ N=30;                     %define N grid
 Nparticle=1:8;          %define particles to be included in the density calculation
 r=0.8; %radius
 
-
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %starting reading data
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [data,lattice]=read_xdatcar(trajname,N_step);
 fprintf(' done reading data\n start calculating density...\n');
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %starting reading data
@@ -88,10 +81,6 @@ density(:,N,:)=temp;
 temp=density(1,:,:)+density(N,:,:);
 density(1,:,:)=temp;
 density(N,:,:)=temp;
-
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % writing to CHG file
